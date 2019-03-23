@@ -33,6 +33,10 @@
 		325FEB4F2245F31C00B0D1BA /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 325FEB3C2245F31C00B0D1BA /* AFURLRequestSerialization.m */; };
 		325FEB502245F31C00B0D1BA /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 325FEB3E2245F31C00B0D1BA /* AFNetworkReachabilityManager.m */; };
 		325FEB512245F31C00B0D1BA /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 325FEB3F2245F31C00B0D1BA /* AFSecurityPolicy.m */; };
+		325FEB552246698C00B0D1BA /* DeallocDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 325FEB542246698C00B0D1BA /* DeallocDetailViewController.m */; };
+		325FEB58224669DA00B0D1BA /* ClassA.m in Sources */ = {isa = PBXBuildFile; fileRef = 325FEB57224669DA00B0D1BA /* ClassA.m */; };
+		325FEB5B224669E500B0D1BA /* ClassB.m in Sources */ = {isa = PBXBuildFile; fileRef = 325FEB5A224669E500B0D1BA /* ClassB.m */; };
+		325FEB5E224674BB00B0D1BA /* HWWeakTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 325FEB5D224674BB00B0D1BA /* HWWeakTimer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +110,14 @@
 		325FEB3E2245F31C00B0D1BA /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
 		325FEB3F2245F31C00B0D1BA /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
 		325FEB402245F31C00B0D1BA /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		325FEB532246698C00B0D1BA /* DeallocDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeallocDetailViewController.h; sourceTree = "<group>"; };
+		325FEB542246698C00B0D1BA /* DeallocDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeallocDetailViewController.m; sourceTree = "<group>"; };
+		325FEB56224669DA00B0D1BA /* ClassA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClassA.h; sourceTree = "<group>"; };
+		325FEB57224669DA00B0D1BA /* ClassA.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClassA.m; sourceTree = "<group>"; };
+		325FEB59224669E500B0D1BA /* ClassB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClassB.h; sourceTree = "<group>"; };
+		325FEB5A224669E500B0D1BA /* ClassB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClassB.m; sourceTree = "<group>"; };
+		325FEB5C224674BA00B0D1BA /* HWWeakTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWWeakTimer.h; sourceTree = "<group>"; };
+		325FEB5D224674BB00B0D1BA /* HWWeakTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWWeakTimer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +168,7 @@
 		325FEAE52245F2DB00B0D1BA /* AFNLeak */ = {
 			isa = PBXGroup;
 			children = (
+				325FEB522246698C00B0D1BA /* DelayDealloc */,
 				325FEB1B2245F31C00B0D1BA /* AFNetworking */,
 				325FEAE62245F2DB00B0D1BA /* AppDelegate.h */,
 				325FEAE72245F2DB00B0D1BA /* AppDelegate.m */,
@@ -246,6 +259,21 @@
 				325FEB402245F31C00B0D1BA /* AFHTTPSessionManager.h */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		325FEB522246698C00B0D1BA /* DelayDealloc */ = {
+			isa = PBXGroup;
+			children = (
+				325FEB5C224674BA00B0D1BA /* HWWeakTimer.h */,
+				325FEB5D224674BB00B0D1BA /* HWWeakTimer.m */,
+				325FEB532246698C00B0D1BA /* DeallocDetailViewController.h */,
+				325FEB542246698C00B0D1BA /* DeallocDetailViewController.m */,
+				325FEB56224669DA00B0D1BA /* ClassA.h */,
+				325FEB57224669DA00B0D1BA /* ClassA.m */,
+				325FEB59224669E500B0D1BA /* ClassB.h */,
+				325FEB5A224669E500B0D1BA /* ClassB.m */,
+			);
+			path = DelayDealloc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -380,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				325FEB5E224674BB00B0D1BA /* HWWeakTimer.m in Sources */,
 				325FEAEB2245F2DB00B0D1BA /* MasterViewController.m in Sources */,
 				325FEAE82245F2DB00B0D1BA /* AppDelegate.m in Sources */,
 				325FEB472245F31C00B0D1BA /* UIButton+AFNetworking.m in Sources */,
@@ -389,15 +418,18 @@
 				325FEB462245F31C00B0D1BA /* UIImageView+AFNetworking.m in Sources */,
 				325FEB492245F31C00B0D1BA /* UIWebView+AFNetworking.m in Sources */,
 				325FEB512245F31C00B0D1BA /* AFSecurityPolicy.m in Sources */,
+				325FEB5B224669E500B0D1BA /* ClassB.m in Sources */,
 				325FEAF92245F2DD00B0D1BA /* main.m in Sources */,
 				325FEB4E2245F31C00B0D1BA /* AFURLSessionManager.m in Sources */,
 				325FEB502245F31C00B0D1BA /* AFNetworkReachabilityManager.m in Sources */,
 				325FEB482245F31C00B0D1BA /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				325FEAEE2245F2DB00B0D1BA /* DetailViewController.m in Sources */,
+				325FEB552246698C00B0D1BA /* DeallocDetailViewController.m in Sources */,
 				325FEB4F2245F31C00B0D1BA /* AFURLRequestSerialization.m in Sources */,
 				325FEB452245F31C00B0D1BA /* AFNetworkActivityIndicatorManager.m in Sources */,
 				325FEB4D2245F31C00B0D1BA /* AFHTTPSessionManager.m in Sources */,
 				325FEB4C2245F31C00B0D1BA /* AFURLResponseSerialization.m in Sources */,
+				325FEB58224669DA00B0D1BA /* ClassA.m in Sources */,
 				325FEB432245F31C00B0D1BA /* UIProgressView+AFNetworking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,6 +9,8 @@
 #import "MasterViewController.h"
 #import "DetailViewController.h"
 #import "AFURLSessionManager.h"
+#import "DeallocDetailViewController.h"
+
 
 
 
@@ -24,11 +26,6 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-//    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-    
- 
 }
 /*
  1) AFN泄漏 展示
@@ -79,16 +76,6 @@
 
 #pragma mark - Segues
 
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//        NSDate *object = self.objects[indexPath.row];
-//        DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-//        [controller setDetailItem:object];
-//        controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-//        controller.navigationItem.leftItemsSupplementBackButton = YES;
-//    }
-//}
 
 
 #pragma mark - Table View
@@ -99,19 +86,27 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.objects.count;
+    return 2;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    DetailViewController *con = [[DetailViewController alloc] init];
-  [self.navigationController pushViewController:con animated:YES];
+    if(indexPath.row == 0){
+        DetailViewController *con = [[DetailViewController alloc] init];
+        [self.navigationController pushViewController:con animated:YES];
+    }else{
+        DeallocDetailViewController *con  = [[DeallocDetailViewController alloc] init];
+        [self.navigationController pushViewController:con animated:YES];
+    }
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-
-    NSDate *object = self.objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    if(indexPath.row == 0){
+        cell.textLabel.text = @"点击这里来测试AFN 泄漏相关的释放";
+    } if(indexPath.row == 1){
+        cell.textLabel.text = @"点击这里来测试控制器延迟释放";
+    }
     return cell;
 }
 
