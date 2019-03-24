@@ -50,6 +50,9 @@
 #endif
 
 
+
+
+
 @interface DeallocDetailViewController ()
 {
       NSTimer *_timer;
@@ -62,15 +65,16 @@
 // view did load 的会调用
 
 
-- (void)testNotDeallocReason{
+// 测试延迟释放相关
+- (void)testDelayDealloc{
     
 //      方案一  weak 下 会 可以解决延迟释放
-        __weak typeof(self) weakSelf = self;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            for(int i = 0;i< 10;i++){
-                [weakSelf requst:@"http://forspeed.onlinedown.net/down/YJPDFViewer2.0.zip"];
-            }
-        });
+//        __weak typeof(self) weakSelf = self;
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            for(int i = 0;i< 10;i++){
+//                [weakSelf requst:@"http://forspeed.onlinedown.net/down/YJPDFViewer2.0.zip"];
+//            }
+//        });
     //
     
     
@@ -89,29 +93,55 @@
     
     
     // 这里的不会引起延迟释放  但是会导致 a 对象和b 对象不释放 , 当前的控制器对a b 对象无引用, 但是a b 对象内部会形成引用环
-    ClassA *a = [[ClassA alloc] init];
-    ClassB *b = [[ClassB alloc] init];
-    a.classb  = b;
-    b.classa = a;
+//    for(int i = 0;i <10;i ++){
+//        ClassA *a = [[ClassA alloc] init];
+//        ClassB *b = [[ClassB alloc] init];
+//        a.classb  = b;
+//        b.classa = a;
+//    }
+
     
     // 这里使用了weaktimer 之后 不管 是否repeat 控制器都可以及时的释放 
 //    _timer = [HWWeakTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(handleTimer:)
 //                                                                  userInfo:nil repeats:YES];
     
-    
-    
-    
   
 }
 
 
+// 测试内存泄漏相关
+- (void)testLeaks{
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(handleTimer:)
+                                                                  userInfo:nil repeats:YES];
+    
+//    // 对象导致内存泄漏
+//    for(int i = 0;i <10;i ++){
+//        ClassA *a = [[ClassA alloc] init];
+//        ClassB *b = [[ClassB alloc] init];
+//        a.classb  = b;
+//        b.classa = a;
+//    }
+    
+}
+
+- (void)testAFNLeasks{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    for(int i = 0;i< 10;i++){
+                        [self requst:@"http://forspeed.onlinedown.net/down/YJPDFViewer2.0.zip"];
+                    }
+    });
+}
+
 - (void)handleTimer:(id)sender
  {
         NSLog(@"%@ say: Hi!", [self class]);
+     
+     ClassB *b = [[ClassB alloc] init];
+
 }
  - (void)cleanTimer
  {
-         [_timer invalidate];
+    [_timer invalidate];
         _timer = nil;
      NSLog(@"定时器%@" ,_timer);
 
@@ -155,7 +185,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.view.backgroundColor = [UIColor whiteColor];
-    [self testNotDeallocReason];
+    //  测试延迟释放相关的代码
+    [self testDelayDealloc];
+    
+    // 测试内存泄漏相关的代码
+//    [self testLeaks];
 
 }
 
@@ -177,7 +211,13 @@
 
 - (void)dealloc
 {
-    NSLog(@"释放%@" ,[self class]);
+    
+#ifdef DEBUG
+    NSLog(@"debug 释放%@" ,[self class]);
+#else
+    NSLog(@"release 释放%@" ,[self class]);
+#endif
+    
     [self cleanTimer];
 }
 
