@@ -10,40 +10,9 @@
 #import "AFURLSessionManager.h"
 #import "AppDelegate.h"
 
+#import "Constant.h"
 
-//解循环引用
 
-#ifndef weakify
-#if DEBUG
-#if __has_feature(objc_arc)
-#define weakify(object) autoreleasepool{} __weak __typeof__(object) weak##_##object = object;
-#else
-#define weakify(object) autoreleasepool{} __block __typeof__(object) block##_##object = object;
-#endif
-#else
-#if __has_feature(objc_arc)
-#define weakify(object) try{} @finally{} {} __weak __typeof__(object) weak##_##object = object;
-#else
-#define weakify(object) try{} @finally{} {} __block __typeof__(object) block##_##object = object;
-#endif
-#endif
-#endif
-
-#ifndef strongify
-#if DEBUG
-#if __has_feature(objc_arc)
-#define strongify(object) autoreleasepool{} __typeof__(object) object = weak##_##object;
-#else
-#define strongify(object) autoreleasepool{} __typeof__(object) object = block##_##object;
-#endif
-#else
-#if __has_feature(objc_arc)
-#define strongify(object) try{} @finally{} __typeof__(object) object = weak##_##object;
-#else
-#define strongify(object) try{} @finally{} __typeof__(object) object = block##_##object;
-#endif
-#endif
-#endif
 
 
 @interface DetailViewController ()
@@ -82,6 +51,7 @@
     //AFN3.0+基于封住URLSession的句柄
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     __weak typeof(manager) weakmanager = manager;
+    @weakify(manager);
     //    __weak typeof(self) weakSelf = self;
     //    AFURLSessionManager *manager = [AppDelegate sharedManager];
     
@@ -97,13 +67,14 @@
         
         return [NSURL fileURLWithPath:path];
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        @strongify(manager)
         NSLog(@"错误信息%@",error);
         //设置下载完成操作
         // filePath就是你下载文件的位置，你可以解压，也可以直接拿来使用
         if ([[NSFileManager defaultManager] fileExistsAtPath:[filePath path]]) {
         }
         NSLog(@"weakmanager 的值 %@" ,weakmanager);
-//        [weakmanager invalidateSessionCancelingTasks:YES];
+        [manager invalidateSessionCancelingTasks:YES];
         //        [manager invalidateSessionCancelingTasks:YES]
     }];
     [downloadTask resume];
