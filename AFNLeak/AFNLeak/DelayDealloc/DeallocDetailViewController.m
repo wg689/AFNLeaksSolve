@@ -13,66 +13,10 @@
 #import "ClassB.h"
 #import "ClassB.h"
 #import "HWWeakTimer.h"
+#import "Constant.h"
 
-//解循环引用
 
-#ifndef weakify
-#if DEBUG
-#if __has_feature(objc_arc)
-#define weakify(object)                                                        \
-autoreleasepool {}                                                           \
-__weak __typeof__(object) weak##_##object = object;
-#else
-#define weakify(object)                                                        \
-autoreleasepool {}                                                           \
-__block __typeof__(object) block##_##object = object;
-#endif
-#else
-#if __has_feature(objc_arc)
-#define weakify(object)                                                        \
-try {                                                                        \
-} @finally {                                                                 \
-}                                                                            \
-{}                                                                           \
-__weak __typeof__(object) weak##_##object = object;
-#else
-#define weakify(object)                                                        \
-try {                                                                        \
-} @finally {                                                                 \
-}                                                                            \
-{}                                                                           \
-__block __typeof__(object) block##_##object = object;
-#endif
-#endif
-#endif
 
-#ifndef strongify
-#if DEBUG
-#if __has_feature(objc_arc)
-#define strongify(object)                                                      \
-autoreleasepool {}                                                           \
-__typeof__(object) object = weak##_##object;
-#else
-#define strongify(object)                                                      \
-autoreleasepool {}                                                           \
-__typeof__(object) object = block##_##object;
-#endif
-#else
-#if __has_feature(objc_arc)
-#define strongify(object)                                                      \
-try {                                                                        \
-} @finally {                                                                 \
-}                                                                            \
-__typeof__(object) object = weak##_##object;
-#else
-#define strongify(object)                                                      \
-try {                                                                        \
-} @finally {                                                                 \
-}                                                                            \
-__typeof__(object) object = block##_##object;
-#endif
-#endif
-#endif
 
 @interface DeallocDetailViewController () {
     NSTimer *_timer;
@@ -143,19 +87,19 @@ __typeof__(object) object = block##_##object;
 
 // 测试内存泄漏相关
 - (void)testLeaks {
-    _timer = [NSTimer scheduledTimerWithTimeInterval:0.1
+    _timer = [NSTimer scheduledTimerWithTimeInterval:10
                                               target:self
                                             selector:@selector(handleTimer:)
                                             userInfo:nil
                                              repeats:YES];
     
     //    // 对象导致内存泄漏
-    //    for(int i = 0;i <10;i ++){
-    //        ClassA *a = [[ClassA alloc] init];
-    //        ClassB *b = [[ClassB alloc] init];
-    //        a.classb  = b;
-    //        b.classa = a;
-    //    }
+    for(int i = 0;i <10;i ++){
+        ClassA *a = [[ClassA alloc] init];
+        ClassB *b = [[ClassB alloc] init];
+        a.classb  = b;
+        b.classa = a;
+    }
 }
 
 - (void)testAFNLeasks {
@@ -213,8 +157,12 @@ __typeof__(object) object = block##_##object;
                                                   NSLog(@"错误信息%@", error);
                                                   //设置下载完成操作
                                                   // filePath就是你下载文件的位置，你可以解压，也可以直接拿来使用
-                                                  if ([[NSFileManager defaultManager] fileExistsAtPath:[filePath path]]) {
-                                                  }
+                                                  if ([[NSFileManager
+                                                        defaultManager]
+                                                       fileExistsAtPath:
+                                                       [filePath
+                                                        path]]) {
+                                                       }
                                                   [weakmanager invalidateSessionCancelingTasks:YES];
                                               }];
     [downloadTask resume];
@@ -225,10 +173,10 @@ __typeof__(object) object = block##_##object;
     // Do any additional setup after loading the view, typically from a nib.
     self.view.backgroundColor = [UIColor whiteColor];
     //  测试延迟释放相关的代码
-    [self testDelayDealloc];
+//        [self testDelayDealloc];
     
     // 测试内存泄漏相关的代码
-    //    [self testLeaks];
+    [self testLeaks];
     
 }
 

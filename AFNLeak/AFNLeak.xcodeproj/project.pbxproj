@@ -118,6 +118,7 @@
 		325FEB5A224669E500B0D1BA /* ClassB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClassB.m; sourceTree = "<group>"; };
 		325FEB5C224674BA00B0D1BA /* HWWeakTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWWeakTimer.h; sourceTree = "<group>"; };
 		325FEB5D224674BB00B0D1BA /* HWWeakTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWWeakTimer.m; sourceTree = "<group>"; };
+		32D4E5B62247DB38007003DF /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +182,7 @@
 				325FEAF42245F2DD00B0D1BA /* LaunchScreen.storyboard */,
 				325FEAF72245F2DD00B0D1BA /* Info.plist */,
 				325FEAF82245F2DD00B0D1BA /* main.m */,
+				32D4E5B62247DB38007003DF /* Constant.h */,
 			);
 			path = AFNLeak;
 			sourceTree = "<group>";

@@ -48,7 +48,7 @@
 
 @interface DetailViewController ()
 {
-      NSTimer *_timer;
+    NSTimer *_timer;
 }
 
 @end
@@ -62,14 +62,14 @@
         self.detailDescriptionLabel.text = [self.detailItem description];
     }
     
-//    // 方案一  weak 下 会
+    //    // 方案一  weak 下 会
     __weak typeof(self) weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         for(int i = 0;i< 100;i++){
             [weakSelf requst:@"http://forspeed.onlinedown.net/down/YJPDFViewer2.0.zip"];
         }
     });
-
+    
 }
 
 
@@ -83,7 +83,7 @@
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     __weak typeof(manager) weakmanager = manager;
     //    __weak typeof(self) weakSelf = self;
-//    AFURLSessionManager *manager = [AppDelegate sharedManager];
+    //    AFURLSessionManager *manager = [AppDelegate sharedManager];
     
     //请求
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
@@ -101,9 +101,10 @@
         //设置下载完成操作
         // filePath就是你下载文件的位置，你可以解压，也可以直接拿来使用
         if ([[NSFileManager defaultManager] fileExistsAtPath:[filePath path]]) {
-            NSString *zipPath = [filePath path];// 将NSURL转成NSString
         }
-        [weakmanager invalidateSessionCancelingTasks:YES];
+        NSLog(@"weakmanager 的值 %@" ,weakmanager);
+//        [weakmanager invalidateSessionCancelingTasks:YES];
+        //        [manager invalidateSessionCancelingTasks:YES]
     }];
     [downloadTask resume];
 }
