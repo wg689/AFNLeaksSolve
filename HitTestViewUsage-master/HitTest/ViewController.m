@@ -7,8 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "CView.h"
 
 @interface ViewController ()<UIGestureRecognizerDelegate>
+@property (weak, nonatomic) IBOutlet CView *CView;
 
 @end
 
@@ -19,10 +21,10 @@
     // Do any additional setup after loading the view, typically from a nib.
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(taped:)];
     tap.delegate = self;
-    [self.view addGestureRecognizer:tap];
+    [self.CView addGestureRecognizer:tap];
 }
 -(void) taped:(UITapGestureRecognizer*)tap {
-    NSLog(@"控制器的view%@",tap.view);
+    NSLog(@"手势被点击的的view%@",tap.view);
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{

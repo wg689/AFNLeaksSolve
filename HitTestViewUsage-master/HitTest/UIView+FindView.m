@@ -43,12 +43,12 @@ static const char NameKey;
     BOOL success = class_addMethod(cls, orignalSelector, method_getImplementation(swizzingMethod), method_getTypeEncoding(swizzingMethod));
     
     
-    if (!success) {
-        //这里的方法实现的获取不能使用class_getImplementation, 因为这里的原方法是已经交换过后的.
-        method_exchangeImplementations(orignalMethod, swizzingMethod);
-    } else {
-        class_replaceMethod(cls, swizzingSelector, method_getImplementation(orignalMethod), method_getTypeEncoding(orignalMethod));
-    }
+//    if (!success) {
+//        //这里的方法实现的获取不能使用class_getImplementation, 因为这里的原方法是已经交换过后的.
+//        method_exchangeImplementations(orignalMethod, swizzingMethod);
+//    } else {
+//        class_replaceMethod(cls, swizzingSelector, method_getImplementation(orignalMethod), method_getTypeEncoding(orignalMethod));
+//    }
 }
 
 - (UIView *)my_hitTest:(CGPoint)point withEvent:(UIEvent *)event {
