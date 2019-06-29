@@ -8,7 +8,37 @@
 
 #import "AView.h"
 
+
+@interface AView()<UIGestureRecognizerDelegate>
+
+
+
+@end
+
+
 @implementation AView
+
+- (instancetype)init {
+    if (self = [super init]) {
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(taped:)];
+        tap.delegate = self;
+        [self addGestureRecognizer:tap];
+    }
+    
+    return self;
+}
+
+
+-(void) taped:(UITapGestureRecognizer*)tap {
+    NSLog(@"手势AView被点击的的view%@",tap.view);
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    NSLog(@"被点击的在AView 里面view%@ %@",touch.view,touch.view.backgroundColor);
+    return YES;
+}
+
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
     NSLog(@"进入A_View---hitTest withEvent ---");
