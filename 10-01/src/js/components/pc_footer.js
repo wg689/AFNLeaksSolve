@@ -13,8 +13,8 @@ export default class PCFooter extends React.Component {
 			<header>
 				<Row>
 					<Col span={2}></Col>
-					<Col span={20}>
-
+					<Col span={20} class="footer">
+            &copy;&nbsp;2019react news. all rights Reserved.
 					</Col>
 					<Col span={2}></Col>
 				</Row>
