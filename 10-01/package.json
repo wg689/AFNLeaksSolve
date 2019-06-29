@@ -20,7 +20,7 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-mixin": "^2.0.2",
-    "react-responsive": "^7.0.0",
+    "react-responsive": "^1.2.1",
     "react-router": "^2.8.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
