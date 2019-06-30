@@ -1,46 +1,44 @@
 import React from 'react';
-import {Row, Col,Carousel,Form} from 'antd';
-import {
-	Tabs,
-} from 'antd';
-
+import {Row, Col} from 'antd';
+import {Tabs,Carousel} from 'antd';
 const TabPane = Tabs.TabPane;
-
-
-export default  class PCNewsContainer  extends React.Component {
-
+import PCNewsBlock from './pc_new_block';
+export default class PCNewsContainer extends React.Component {
 	render() {
-    const setting = {
-      dots: true,
-      infinite:true,
-      speed:500,
-      slidesToShow:1,
-      autoplay:true
-    }
 
-    return (
-      <div>
-        <row>
-          <Col span={2}></Col>
-          <Col span={20} class="container">
+    const settings = {
+        dots:true,
+        infinite:true,
+        speed: 500,
+        slidesToShow:1,
+        autoplay:true
+    };
+
+		return (
+			<div>
+				<Row>
+					<Col span={2}></Col>
+					<Col span={20} class="container">
             <div class="leftContainer">
               <div class="carousel">
-                <Carousel {...setting}>
-                  <div> <img src="./src/images/carousel_1.jpg" alt=""/> </div>
-                  <div> <img src="./src/images/carousel_2.jpg" alt=""/> </div>
-                  <div> <img src="./src/images/carousel_3.jpg" alt=""/> </div>
-                  <div> <img src="./src/images/carousel_4.jpg" alt=""/> </div>
+                <Carousel {...settings}>
+                  <div><img src="./src/images/carousel_1.jpg"/></div>
+                  <div><img src="./src/images/carousel_2.jpg"/></div>
+                  <div><img src="./src/images/carousel_3.jpg"/></div>
+                  <div><img src="./src/images/carousel_4.jpg"/></div>
                 </Carousel>
               </div>
             </div>
+            <Tabs class="tabs_news">
+              <TabPane>
+                <PCNewsBlock count ={22} type = "top" width ="100%" bordered="false">
+                </PCNewsBlock>
+              </TabPane>
+            </Tabs>
           </Col>
-          <Col span={2}></Col>
-        </row>
-
-      </div>
-
+					<Col span={2}></Col>
+				</Row>
+			</div>
 		);
 	};
 }
-
-// PCNewsContainer = Form.create({})(PCNewsContainer);
