@@ -24,3 +24,13 @@
 {
   display: inline-block !important;
 }
+
+.leftContainer{
+  width: 400px;
+  float: left;
+}
+
+.carousel {
+  width: 400px;
+  float: left;
+}
