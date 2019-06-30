@@ -24,28 +24,34 @@ export  default class MobileList extends React.Component {
     const newsList = news.length
     ?  news.map((newsItem,index) => (
       <section key={index} className="m_article list-item special_section clearfix" >
-      <Link to ={`details/${newsItem.uniquekey}`}>
-        <div className="m_artical_img">
-          <img src={newsItem.thumbnail_pic_s} alt={newsItem.title}/>
-        </div>
-        <div className="m_artical_info">
-          <span>{newsItem.title}</span>
-        </div>
-        <div className="m_artical_desc clearfix">
-          <div className="m_artical_desc_l">
-            <span className="m_artical_channel">{newsItem.realtype}</span>
-            <span className="m_artical_time">{newsItem.date}</span>
+        <Link to ={`details/${newsItem.uniquekey}`}>
+          <div className="m_artical_img">
+            <img src={newsItem.thumbnail_pic_s} alt={newsItem.title}/>
           </div>
-        </div>
-      </Link>
+          <div className="m_artical_info">
+            <div className="m_article_title">
+              <span>{newsItem.title}</span>
+            </div>
+            <div className="m_artical_desc clearfix">
+              <div className="m_artical_desc_l">
+                <span className="m_artical_channel">{newsItem.realtype}</span>
+                <span className="m_artical_time">{newsItem.date}</span>
+              </div>
+            </div>
+          </div>
+        </Link>
       </section>
     )): "没有加载到任何新闻";
 
 
     return(
       <div>
-        {newsList}
+        <Row>
+         <Col span ={24}>
+           {newsList}
+          </Col>
+        </Row>
       </div>
-    )
-  }
+    );
+  };
 }
