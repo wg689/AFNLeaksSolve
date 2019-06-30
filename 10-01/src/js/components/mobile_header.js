@@ -61,6 +61,8 @@ class MobileHeader  extends React.Component {
 		.then(response => response.json())
 		.then(json => {
 			this.setState({userNickName: json.NickUserName, userid: json.UserId});
+			localStorage.userid = json.UserId;
+			localStorage.userNickName = json.NickUserName;
 		});
 		if (this.state.action=="login") {
 			this.setState({hasLogined:true});
