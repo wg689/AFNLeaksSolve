@@ -7,14 +7,15 @@ import {
   Menu,
   Icon,
 	Tabs,
-  message,
+  Message,
   Form,
   Input,
   Button,
   CheckBox,
-	modal
+	Modal
 } from 'antd';
 const SubMenu = Menu.SubMenu;
+const FormItem = Form.Item;
 const MenuItemGroup = Menu.ItemGroup;
 const TabPane = Tabs.TabPane;
 class PCHeader extends React.Component {
@@ -30,18 +31,20 @@ class PCHeader extends React.Component {
 		};
 	};
 
+	setModalVisible(value) {
+		console.log('控制台电机');
 
-
-
-
-
-	// setModalVisible(value){
-	// 	this.setState{(modeVisible:value)}
-	// };
+	  this.setState ({
+	    modeVisible: value
+	  });
+	};
 
 	handleClick(e){
+		console.log("handleClick");
 		if(e.key == "register"){
+			console.log("register");
 			this.setState({current:'register'});
+			this.setModalVisible(true);
 		}else{
 			this.setState({current:e.key});
 		}
@@ -49,7 +52,7 @@ class PCHeader extends React.Component {
 
 
 	handleSubmit(){
-
+		// 页面开始提交之后 开始提交数据
 	}
 
 
@@ -81,7 +84,7 @@ class PCHeader extends React.Component {
 						</a>
 					</Col>
 					<Col span={16}>
-						<Menu mode="horizontal" onclik={this.handleClick.bind(this)} selectedKeys={[this.state.current]}>
+						<Menu mode="horizontal" onClick={this.handleClick.bind(this)} selectedKeys={[this.state.current]}>
 							<Menu.Item key="top">
 								<Icon type="appstore"/>头条
 							</Menu.Item>
@@ -108,6 +111,26 @@ class PCHeader extends React.Component {
 							</Menu.Item>
 							{userShow}
 						</Menu>
+            <Modal title= "用户中心" wrapClassName="vertical-center-modal" visible= {this.state.modalVisible} onCancel={()=>this.setModalVisible(false)} onOk={()=>this.setModalVisible(false)} okText="关闭" >
+	           	<Tabs type ="card">
+							  <TabPane tab="注册" key="2">
+									<Form horizontal onSubMit={this.handleSubmit.bind(this)}>
+										<FormItem lable="账户">
+											<Input placeHolder="请输入您的账户" {...getFieldProps('r_userName')}/>
+										</FormItem>
+										<FormItem lable="密码">
+											<Input type="password" placeHolder="请输入您的密码" {...getFieldProps('r_password')}/>
+										</FormItem>
+										<FormItem lable="确认密码">
+											<Input type="password" placeHolder="请再次输入您的密码" {...getFieldProps('r_confirmPassword')}/>
+										</FormItem>
+										<Button type="primary"></Button>
+									</Form>
+								</TabPane>
+							</Tabs>
+						</Modal>
+
+
 					</Col>
 					<Col span={2}></Col>
 				</Row>
