@@ -7,7 +7,7 @@ import {
   Menu,
   Icon,
 	Tabs,
-  Message,
+  message,
   Form,
   Input,
   Button,
@@ -18,6 +18,7 @@ const SubMenu = Menu.SubMenu;
 const FormItem = Form.Item;
 const MenuItemGroup = Menu.ItemGroup;
 const TabPane = Tabs.TabPane;
+import {Router, Route, Link, browserHistory} from 'react-router'
 class PCHeader extends React.Component {
 	constructor() {
 		super();
@@ -51,8 +52,29 @@ class PCHeader extends React.Component {
 	};
 
 
-	handleSubmit(){
+	handleSubmit(e){
 		// 页面开始提交之后 开始提交数据
+		e.preventDefault();
+		var myFetchOptions = {
+			method: 'GET'
+		}
+		var formData = this.props.form.getFieldsValue();
+		console.log(formData);
+		var url =  "http://newsapi.gugujiankong.com/Handler.ashx?action=" + this.state.action
+			+ "&username="+formData.userName+"&password="+formData.password
+			+"&r_userName=" + formData.r_userName + "&r_password="
+			+ formData.r_password + "&r_confirmPassword="
+			+ formData.r_confirmPassword;
+		console.log(url);
+		fetch(url, myFetchOptions).then(response => response.json()).then(json=>{
+				this.setState({userNickName:json.userNickName,userid:json.UserId});
+			});
+		if(this.state.action=="login"){
+			this.setState({hasLogined:true});
+		}
+		message.success("请求成功");
+		this.setModalVisible(false);
+
 	}
 
 
@@ -62,9 +84,11 @@ class PCHeader extends React.Component {
 		const userShow = this.state.hasLogined
 		?
 		<Menu.Item key="logout" class = "register">
-			<Button type ="dashed" htmlType="button">{this.state.userNickName}</Button>
+			<Button type ="primary" htmlType="button">{this.state.userNickName}</Button>
 			&nbsp;&nbsp;
-			<Link target="_blank">个人中心</Link>
+			<Link target="_blank">
+				<Button type = "dashed" htmlType="button"></Button>
+			</Link>
 			&nbsp;&nbsp;
 			<Button type ="ghost" htmlType="button">退出</Button>
 		</Menu.Item>
