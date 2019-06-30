@@ -73,6 +73,13 @@ class PCHeader extends React.Component {
 			this.setState({action: 'register'});
 		}
 	};
+	callback(){
+		if(key == 1) {
+			this.setState({action:'login'});
+		}else if(key ==2){
+			this.setState({action:'register'})
+		}
+	}
 	render() {
 		let {getFieldProps} = this.props.form;
 		const userShow = this.state.hasLogined
