@@ -114,17 +114,17 @@ class PCHeader extends React.Component {
             <Modal title= "用户中心" wrapClassName="vertical-center-modal" visible= {this.state.modalVisible} onCancel={()=>this.setModalVisible(false)} onOk={()=>this.setModalVisible(false)} okText="关闭" >
 	           	<Tabs type ="card">
 							  <TabPane tab="注册" key="2">
-									<Form horizontal onSubMit={this.handleSubmit.bind(this)}>
+									<Form horizontal onSubmit={this.handleSubmit.bind(this)}>
 										<FormItem lable="账户">
-											<Input placeHolder="请输入您的账户" {...getFieldProps('r_userName')}/>
+											<Input placeholder="请输入您的账户" {...getFieldProps('r_userName')}/>
 										</FormItem>
 										<FormItem lable="密码">
-											<Input type="password" placeHolder="请输入您的密码" {...getFieldProps('r_password')}/>
+											<Input type="password" placeholder="请输入您的密码" {...getFieldProps('r_password')}/>
 										</FormItem>
 										<FormItem lable="确认密码">
-											<Input type="password" placeHolder="请再次输入您的密码" {...getFieldProps('r_confirmPassword')}/>
+											<Input type="password" placeholder="请再次输入您的密码" {...getFieldProps('r_confirmPassword')}/>
 										</FormItem>
-										<Button type="primary"></Button>
+										<Button type="primary" htmlType = "submit">注册</Button>
 									</Form>
 								</TabPane>
 							</Tabs>
