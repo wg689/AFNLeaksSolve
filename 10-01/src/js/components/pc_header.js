@@ -35,7 +35,7 @@ class PCHeader extends React.Component {
 		console.log('控制台电机');
 
 	  this.setState ({
-	    modeVisible: value
+	    modalVisible: value
 	  });
 	};
 
