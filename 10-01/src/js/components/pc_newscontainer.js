@@ -3,6 +3,7 @@ import {Row, Col} from 'antd';
 import {Tabs,Carousel} from 'antd';
 const TabPane = Tabs.TabPane;
 import PCNewsBlock from './pc_new_block';
+import PCNewsImageBlock from './pc_news_image_block';
 export default class PCNewsContainer extends React.Component {
 	render() {
 
@@ -13,6 +14,7 @@ export default class PCNewsContainer extends React.Component {
         slidesToShow:1,
         autoplay:true
     };
+
 
 		return (
 			<div>
@@ -28,13 +30,24 @@ export default class PCNewsContainer extends React.Component {
                   <div><img src="./src/images/carousel_4.jpg"/></div>
                 </Carousel>
               </div>
-            </div>
+							<PCNewsImageBlock count = {6} type="guoji" width="800px" cardTitle="国际头条" imageWidth = "112px"></PCNewsImageBlock>
+
+					  </div>
             <Tabs class="tabs_news">
-              <TabPane>
-                <PCNewsBlock count ={22} type = "top" width ="100%" bordered="false">
+              <TabPane tab="头条" key="1">
+                <PCNewsBlock count ={10} type = "yule" width ="100%" bordered="false">
+                </PCNewsBlock>
+              </TabPane>
+              <TabPane tab="国际新闻" key="2">
+                <PCNewsBlock count ={10} type = "guoji" width ="100%" bordered="false">
                 </PCNewsBlock>
               </TabPane>
             </Tabs>
+						<div>
+							<PCNewsImageBlock count = {6} type="guonei" width="100%" cardTitle="国际头条" imageWidth = "132px"></PCNewsImageBlock>
+							<PCNewsImageBlock count = {6} type="yule" width="100%" cardTitle="国际头条" imageWidth = "132px"></PCNewsImageBlock>
+
+						</div>
           </Col>
 					<Col span={2}></Col>
 				</Row>
