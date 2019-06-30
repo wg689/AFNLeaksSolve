@@ -15,13 +15,17 @@ export default class MobileIndex extends React.Component {
 					<TabPane tab="头条" key= "1">
 						<MobileList count={20} type="top"></MobileList>
 					</TabPane>
-					<TabPane tab="社会" key= "shehui">
+					<TabPane tab="社会" key= "2">
+						<MobileList count={20} type="guonei"></MobileList>
 					</TabPane>
-					<TabPane tab="国内" key= "guonei">
+					<TabPane tab="国内" key= "3">
+						<MobileList count={20} type="top"></MobileList>
 					</TabPane>
-					<TabPane tab="国际" key= "guoji">
+					<TabPane tab="国际" key= "4">
+						<MobileList count={20} type="top"></MobileList>
 					</TabPane>
-					<TabPane tab="娱乐" key= "yule">
+					<TabPane tab="娱乐" key= "5">
+						<MobileList count={20} type="top"></MobileList>
 					</TabPane>
 				</Tabs>
 				<MobileFooter></MobileFooter>
