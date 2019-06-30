@@ -1,102 +1,93 @@
 import React from 'react';
+import {Row, Col} from 'antd';
 import {
-  Row,
-  Col
-} from 'antd';
-import {
-  Menu,
-  Icon,
+	Menu,
+	Icon,
 	Tabs,
-  message,
-  Form,
-  Input,
-  Button,
-  CheckBox,
+	message,
+	Form,
+	Input,
+	Button,
+	CheckBox,
 	Modal
 } from 'antd';
-const SubMenu = Menu.SubMenu;
 const FormItem = Form.Item;
-const MenuItemGroup = Menu.ItemGroup;
+const SubMenu = Menu.SubMenu;
 const TabPane = Tabs.TabPane;
+const MenuItemGroup = Menu.ItemGroup;
 import {Router, Route, Link, browserHistory} from 'react-router'
 class PCHeader extends React.Component {
 	constructor() {
 		super();
 		this.state = {
 			current: 'top',
-			modalVisible:false,
-			action:'login',
-			hasLogined:false,
-			userNickName:'',
-			userid:0
+			modalVisible: false,
+			action: 'login',
+			hasLogined: false,
+			userNickName: '',
+			userid: 0
 		};
 	};
-
-	setModalVisible(value) {
-		console.log('控制台电机');
-
-	  this.setState ({
-	    modalVisible: value
-	  });
+	setModalVisible(value)
+	{
+		this.setState({modalVisible: value});
 	};
-
-	handleClick(e){
-		console.log("handleClick");
-		if(e.key == "register"){
-			console.log("register");
-			this.setState({current:'register'});
+	handleClick(e) {
+		if (e.key = "register") {
+			this.setState({current: 'register'});
 			this.setModalVisible(true);
-		}else{
-			this.setState({current:e.key});
+		} else {
+			{
+				this.setState({current: e.key});
+			}
 		}
 	};
-
-
-	handleSubmit(e){
-		// 页面开始提交之后 开始提交数据
+	handleSubmit(e)
+	{
+		//页面开始向 API 进行提交数据
 		e.preventDefault();
 		var myFetchOptions = {
 			method: 'GET'
-		}
+		};
 		var formData = this.props.form.getFieldsValue();
 		console.log(formData);
-		var url =  "http://newsapi.gugujiankong.com/Handler.ashx?action=" + this.state.action
-			+ "&username="+formData.userName+"&password="+formData.password
-			+"&r_userName=" + formData.r_userName + "&r_password="
-			+ formData.r_password + "&r_confirmPassword="
-			+ formData.r_confirmPassword;
-		console.log(url);
-		fetch(url, myFetchOptions).then(response => response.json()).then(json=>{
-				this.setState({userNickName:json.userNickName,userid:json.UserId});
-			});
-		if(this.state.action=="login"){
+		fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=" + this.state.action
+		+ "&username="+formData.userName+"&password="+formData.password
+		+"&r_userName=" + formData.r_userName + "&r_password="
+		+ formData.r_password + "&r_confirmPassword="
+		+ formData.r_confirmPassword, myFetchOptions)
+		.then(response => response.json())
+		.then(json => {
+			this.setState({userNickName: json.NickUserName, userid: json.UserId});
+		});
+		if (this.state.action=="login") {
 			this.setState({hasLogined:true});
 		}
-		message.success("请求成功");
+		message.success("请求成功！");
 		this.setModalVisible(false);
-
-	}
-
-
+	};
+	callback(key) {
+		if (key == 1) {
+			this.setState({action: 'login'});
+		} else if (key == 2) {
+			this.setState({action: 'register'});
+		}
+	};
 	render() {
-
 		let {getFieldProps} = this.props.form;
 		const userShow = this.state.hasLogined
-		?
-		<Menu.Item key="logout" class = "register">
-			<Button type ="primary" htmlType="button">{this.state.userNickName}</Button>
-			&nbsp;&nbsp;
-			<Link target="_blank">
-				<Button type = "dashed" htmlType="button"></Button>
-			</Link>
-			&nbsp;&nbsp;
-			<Button type ="ghost" htmlType="button">退出</Button>
-		</Menu.Item>
-		:
-		<Menu.Item key="register" class = "register">
-			<Icon type="appstore"/>注册/登录
-		</Menu.Item>;
-
+			? <Menu.Item key="logout" class="register">
+					<Button type="primary" htmlType="button">{this.state.userNickName}</Button>
+					&nbsp;&nbsp;
+					<Link target="_blank">
+						<Button type="dashed" htmlType="button">个人中心</Button>
+					</Link>
+					&nbsp;&nbsp;
+					<Button type="ghost" htmlType="button">退出</Button>
+				</Menu.Item>
+			: <Menu.Item key="register" class="register">
+				<Icon type="appstore"/>注册/登录
+			</Menu.Item>;
 		return (
 			<header>
 				<Row>
@@ -135,26 +126,35 @@ class PCHeader extends React.Component {
 							</Menu.Item>
 							{userShow}
 						</Menu>
-            <Modal title= "用户中心" wrapClassName="vertical-center-modal" visible= {this.state.modalVisible} onCancel={()=>this.setModalVisible(false)} onOk={()=>this.setModalVisible(false)} okText="关闭" >
-	           	<Tabs type ="card">
-							  <TabPane tab="注册" key="2">
+						<Modal title="用户中心" wrapClassName="vertical-center-modal" visible={this.state.modalVisible} onCancel= {()=>this.setModalVisible(false)} onOk={() => this.setModalVisible(false)} okText="关闭">
+							<Tabs type="card" onChange={this.callback.bind(this)}>
+								<TabPane tab="登录" key="1">
 									<Form horizontal onSubmit={this.handleSubmit.bind(this)}>
-										<FormItem lable="账户">
-											<Input placeholder="请输入您的账户" {...getFieldProps('r_userName')}/>
+										<FormItem label="账户">
+											<Input placeholder="请输入您的账号" {...getFieldProps('userName')}/>
 										</FormItem>
-										<FormItem lable="密码">
+										<FormItem label="密码">
+											<Input type="password" placeholder="请输入您的密码" {...getFieldProps('password')}/>
+										</FormItem>
+										<Button type="primary" htmlType="submit">登录</Button>
+									</Form>
+								</TabPane>
+								<TabPane tab="注册" key="2">
+									<Form horizontal onSubmit={this.handleSubmit.bind(this)}>
+										<FormItem label="账户">
+											<Input placeholder="请输入您的账号" {...getFieldProps('r_userName')}/>
+										</FormItem>
+										<FormItem label="密码">
 											<Input type="password" placeholder="请输入您的密码" {...getFieldProps('r_password')}/>
 										</FormItem>
-										<FormItem lable="确认密码">
+										<FormItem label="确认密码">
 											<Input type="password" placeholder="请再次输入您的密码" {...getFieldProps('r_confirmPassword')}/>
 										</FormItem>
-										<Button type="primary" htmlType = "submit">注册</Button>
+										<Button type="primary" htmlType="submit">注册</Button>
 									</Form>
 								</TabPane>
 							</Tabs>
 						</Modal>
-
-
 					</Col>
 					<Col span={2}></Col>
 				</Row>
@@ -162,5 +162,4 @@ class PCHeader extends React.Component {
 		);
 	};
 }
-
-export  default PCHeader = Form.create({})(PCHeader);
+export default PCHeader = Form.create({})(PCHeader);
