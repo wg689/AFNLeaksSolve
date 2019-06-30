@@ -1,7 +1,7 @@
 import React from 'react';
 import {Row, Col} from 'antd';
 
-export default class PCFooter extends React.Component {
+export default class MobileFooter extends React.Component {
 	constructor() {
 		super();
 		this.state = {
